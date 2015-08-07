@@ -24,7 +24,7 @@ class Easy_Development_Mode {
 
 		# set values
 		$this->user = $_SERVER['REMOTE_ADDR'];
-		$this->settings_group = 'devmode_settings';
+		$this->settings_group = 'easy_development_mode_settings';
 		$this->settings_name = $this->settings_group;
 		$this->admin = false;
 
