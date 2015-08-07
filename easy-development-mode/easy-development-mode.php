@@ -7,6 +7,7 @@ defined( 'ABSPATH' ) or die('Do not directly call this script');
  * Author URI: http://deusmachine.com
  * Description: Restrict access on your globally-accessible development server to a single (or multiple) IP address, with the option to redirect somewhere else.
  * Version: 1.0
+ *
  */
 
 class Easy_Development_Mode {
@@ -107,7 +108,7 @@ class Easy_Development_Mode {
 	 */
 	public function redir_url_callback() {
 		printf(
-			'<input type="text" id="redirect_url" name="devmode_settings[ez_redirect_url]" size="25" value="%s" />',
+			'<input type="text" id="redirect_url" name="' . $this->settings_group . '[ez_redirect_url]" size="25" value="%s" />',
 			isset( $this->options['ez_redirect_url'] ) ? esc_attr( $this->options['ez_redirect_url'] ) : ''
 		);
 	}
@@ -120,18 +121,18 @@ class Easy_Development_Mode {
 		<p>Your IP Address: <strong><?php echo $this->user;?></strong></p><br />
 		<?php
 		printf(
-			'<input type="text" id="allowed_ips" name="devmode_settings[ez_allowed_ips]" size="25" value="%s">',
+			'<input type="text" id="allowed_ips" name="' . $this->settings_group . '[ez_allowed_ips]" size="25" value="%s">',
 			isset( $this->options['ez_allowed_ips'] ) ? esc_attr( $this->options['ez_allowed_ips'] ) : ''
 		);
 		?>
 		<p>
 
-				Comma-separate each IP address when using multiple.<br />
+			Comma-separate each IP address when using multiple.<br />
 			<em>
 				Example: 127.0.0.1, 192.168.1.2, etc.
 			</em>
 		</p>
-		<?php
+	<?php
 	}
 
 	/**
@@ -163,7 +164,7 @@ class Easy_Development_Mode {
 			</form>
 		</div>
 
-		<?php
+	<?php
 
 	}
 
@@ -176,13 +177,13 @@ class Easy_Development_Mode {
 
 		# don't block any admins by default
 		if( current_user_can( 'activate_plugins' ) )
-			$admin = true;
+			$this->admin = true;
 
 		# if we're in the admin section redirect.
 		if( is_admin() )
-			$admin = true;
+			$this->admin = true;
 
-		if( $this->options['ez_redirect_url'] != "" && $admin == false ) {
+		if( $this->options['ez_redirect_url'] != "" && $this->admin == false ) {
 			if( !in_array( $this->user, $ips ) )
 				header("Location: {$this->options['ez_redirect_url']}");
 		}
