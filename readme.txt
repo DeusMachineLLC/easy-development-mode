@@ -1,9 +1,9 @@
 === Easy Development Mode ===
 Contributors: DeusMachineLLC, Lee Ralls
 Tags: development, ip address, restrict
-Requires at least: 3.4.1
-Tested up to: 4.0
-Stable tag: trunk
+Requires at least: 3.1.0
+Tested up to: 4.2.4
+Stable tag: 4.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -35,6 +35,17 @@ Restrict access on your globally-accessible development server to a single (or m
 = I added multiple IP addresses and now all traffic is blocked. What do I do? =
 
 Make sure that your list of IP addresses are comma separated. Ex: 127.0.0.1, 192.168.1.2, 10.0.0.2
+
+= Help! I've accidently removed my own IP address from the whitelist and now I can't get access to the website. =
+
+The best way around this is to remove the option name from the wp_options table.
+Using your favorite MySQL editor, open the connection to your database and execute the following query:
+
+* DELETE FROM `wp_options` WHERE `option_name` = 'easy_development_mode_settings';
+
+= The redirect URL is creating a forever loop =
+
+You should not use the same domain as a redirect as the WordPress install domain. Try using http://google.com
 
 == Changelog ==
 
